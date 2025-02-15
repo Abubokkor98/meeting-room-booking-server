@@ -90,6 +90,17 @@ async function run() {
           res.status(500).send({ message: "Error fetching bookings", error });
         }
       });
+      // --- Admin Only ---
+    // Manage rooms: Add a new room
+    app.post("/admin/rooms", async (req, res) => {
+        const room = req.body;
+        try {
+          const result = await roomsCollection.insertOne(room);
+          res.send(result);
+        } catch (error) {
+          res.status(500).send({ message: "Error adding room", error });
+        }
+      });
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
