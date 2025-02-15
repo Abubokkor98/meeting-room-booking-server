@@ -34,6 +34,16 @@ async function run() {
       .db("meeting-room-booking")
       .collection("users");
 
+    // Get all rooms
+    app.get("/rooms", async (req, res) => {
+        try {
+          const rooms = await roomsCollection.find().toArray();
+          res.send(rooms);
+        } catch (error) {
+          res.status(500).send({ message: "Error fetching rooms", error });
+        }
+      });
+
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
