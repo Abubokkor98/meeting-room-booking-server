@@ -102,6 +102,21 @@ async function run() {
         }
       });
 
+       // Update a room
+    app.put("/admin/rooms/:roomId", async (req, res) => {
+        const roomId = req.params.roomId;
+        const updatedRoom = req.body;
+        try {
+          const result = await roomsCollection.updateOne(
+            { _id: new ObjectId(roomId) },
+            { $set: updatedRoom }
+          );
+          res.send(result);
+        } catch (error) {
+          res.status(500).send({ message: "Error updating room", error });
+        }
+      });
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
