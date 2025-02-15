@@ -58,6 +58,18 @@ async function run() {
       }
     });
 
+    // --- User Authentication Required ---
+    // User dashboard: Fetch user-specific bookings
+    app.get("/dashboard", async (req, res) => {
+        const email = req.query.email; // Assuming email is passed as a query parameter
+        try {
+          const bookings = await bookingsCollection.find({ user: email }).toArray();
+          res.send(bookings);
+        } catch (error) {
+          res.status(500).send({ message: "Error fetching dashboard data", error });
+        }
+      });
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
