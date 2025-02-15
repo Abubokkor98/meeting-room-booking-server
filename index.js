@@ -70,6 +70,17 @@ async function run() {
         }
       });
 
+          // Book a room
+    app.post("/bookings", async (req, res) => {
+        const booking = req.body;
+        try {
+          const result = await bookingsCollection.insertOne(booking);
+          res.send(result);
+        } catch (error) {
+          res.status(500).send({ message: "Error booking room", error });
+        }
+      });
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
