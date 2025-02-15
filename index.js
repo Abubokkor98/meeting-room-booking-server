@@ -81,6 +81,16 @@ async function run() {
         }
       });
 
+      // Manage bookings: Fetch all bookings (Admin view)
+    app.get("/admin/bookings", async (req, res) => {
+        try {
+          const bookings = await bookingsCollection.find().toArray();
+          res.send(bookings);
+        } catch (error) {
+          res.status(500).send({ message: "Error fetching bookings", error });
+        }
+      });
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
