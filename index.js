@@ -117,6 +117,18 @@ async function run() {
         }
       });
 
+      // Delete a room
+    app.delete("/admin/rooms/:roomId", async (req, res) => {
+        const roomId = req.params.roomId;
+        try {
+          const result = await roomsCollection.deleteOne({ _id: new ObjectId(roomId) });
+          res.send(result);
+        } catch (error) {
+          res.status(500).send({ message: "Error deleting room", error });
+        }
+      });
+  
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
