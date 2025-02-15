@@ -36,14 +36,27 @@ async function run() {
 
     // Get all rooms
     app.get("/rooms", async (req, res) => {
-        try {
-          const rooms = await roomsCollection.find().toArray();
-          res.send(rooms);
-        } catch (error) {
-          res.status(500).send({ message: "Error fetching rooms", error });
-        }
-      });
+      try {
+        const rooms = await roomsCollection.find().toArray();
+        res.send(rooms);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching rooms", error });
+      }
+    });
 
+    // Get room details
+    app.get("/rooms/:id", async (req, res) => {
+      const roomId = req.params.id;
+      try {
+        const query = {
+          _id: new ObjectId(roomId),
+        };
+        const result = await roomsCollection.findOne(query);
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching room details", error });
+      }
+    });
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
