@@ -61,14 +61,15 @@ async function run() {
     // --- User Authentication Required ---
     // User dashboard: Fetch user-specific bookings
     app.get("/dashboard", async (req, res) => {
-        const email = req.query.email; // Assuming email is passed as a query parameter
-        try {
-          const bookings = await bookingsCollection.find({ user: email }).toArray();
-          res.send(bookings);
-        } catch (error) {
-          res.status(500).send({ message: "Error fetching dashboard data", error });
-        }
-      });
+      const email = req.query.email; 
+      try {
+        const bookings = await bookingsCollection.find({ userEmail: email }).toArray();
+        res.send(bookings);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching dashboard data", error });
+      }
+  });
+  
 
           // Book a room
     app.post("/bookings", async (req, res) => {
@@ -90,6 +91,18 @@ async function run() {
           res.status(500).send({ message: "Error fetching bookings", error });
         }
       });
+
+      // Delete any booking (Admin only)
+app.delete("/admin/bookings/:id", async (req, res) => {
+  const bookingId = req.params.bookingId;
+  try {
+    const result = await bookingsCollection.deleteOne({ _id: new ObjectId(id) });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting booking", error });
+  }
+});
+
       // --- Admin Only ---
     // Manage rooms: Add a new room
     app.post("/admin/rooms", async (req, res) => {
