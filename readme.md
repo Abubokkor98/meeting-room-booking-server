@@ -16,7 +16,7 @@ A full-stack meeting room booking system that allows users to book, manage, and 
 
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Hosting:** (Specify if using a cloud provider like Render, Vercel, etc.)
+- **Hosting:** Vercel
 
 ## Setup Instructions
 
